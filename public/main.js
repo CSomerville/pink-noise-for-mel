@@ -17,6 +17,11 @@ function noisy() {
   var canvas = document.getElementById('oscilloscope');
   var toAnimate = [];
 
+  navigator.getUserMedia = (navigator.getUserMedia ||
+                          navigator.webkitGetUserMedia ||
+                          navigator.mozGetUserMedia ||
+                          navigator.msGetUserMedia);
+
   var pinkNoise = function pinkNoise() {
     var b0, b1, b2, b3, b4, b5, b6;
     b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
@@ -91,14 +96,26 @@ function noisy() {
     }
   }
 
+  var microphone = function microphone(analyzer) {
+    if (navigator.getUserMedia) {
+      navigator.getUserMedia( {video: false, audio: true}, function(stream) {
+        source = audioCtx.createMediaStreamSource(stream);
+        source.connect(analyzer);
+      }, function (err) {
+        console.log(err);
+      });
+    }
+  }
+
   return {
     sing: function sing() {
       var pink = pinkNoise();
       var oscilloscope = oscilloscopeInit(canvas);
       toAnimate.push(oscilloscope.draw);
 
-      pink.connect(oscilloscope.analyzer);
-      pink.connect(audioCtx.destination);
+      microphone(oscilloscope.analyzer);
+      // pink.connect(oscilloscope.analyzer);
+      // pink.connect(audioCtx.destination);
     },
 
     animate: function animate() {
