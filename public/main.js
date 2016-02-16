@@ -1,6 +1,6 @@
-// the pink noise implementation is Zach Denton's:
-// http://noisehack.com/generate-noise-web-audio-api/
-
+/* the pink noise implementation is Zach Denton's:
+** http://noisehack.com/generate-noise-web-audio-api/
+*/
 
 window.onload = init;
 
@@ -17,10 +17,13 @@ function noisy() {
   var canvas = document.getElementById('oscilloscope');
   var toAnimate = [];
 
+  // to access client's microphone - browser implementations still vary
   navigator.getUserMedia = (navigator.getUserMedia ||
-                          navigator.webkitGetUserMedia ||
-                          navigator.mozGetUserMedia ||
-                          navigator.msGetUserMedia);
+                            navigator.webkitGetUserMedia ||
+                            navigator.mozGetUserMedia ||
+                            navigator.msGetUserMedia);
+
+
 
   var pinkNoise = function pinkNoise() {
     var b0, b1, b2, b3, b4, b5, b6;
@@ -97,10 +100,12 @@ function noisy() {
   }
 
   var microphone = function microphone(analyzer) {
+    var source;
     if (navigator.getUserMedia) {
       navigator.getUserMedia( {video: false, audio: true}, function(stream) {
         source = audioCtx.createMediaStreamSource(stream);
         source.connect(analyzer);
+        
       }, function (err) {
         console.log(err);
       });
