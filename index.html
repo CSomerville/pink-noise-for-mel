@@ -3,18 +3,38 @@
   <head>
     <meta charset="utf-8">
     <title>pink noise for mel</title>
+    <script src="https://npmcdn.com/draggabilly@2.1/dist/draggabilly.pkgd.min.js"></script>
     <script src="/static/microphone.js"></script>
     <script src="/static/oscilloscope.js"></script>
     <script src="/static/pinknoise.js"></script>
+    <script src="/static/amount.js"></script>
     <script src="/static/init.js"></script>
     <style>
       #oscilloscope {
+        width: 80%;
+        display: inline-block;
+      }
+      .gain-control {
+        width: 10%;
+        height: 400px;
+        position: relative;
+        background-color: pink;
+        display: inline-block;
+      }
+      .slider {
         width: 100%;
+        height: 20px;
+        position: absolute;
+        top: 380px;
+        background-color: black;
       }
     </style>
   </head>
   <body>
     <canvas id="oscilloscope" height="300px" width="600px"></canvas>
+    <div id="master-volume" class="gain-control">
+      <div class="slider"></div>
+    </div>
     <p id="microphone"></p>
   </body>
 </html>
