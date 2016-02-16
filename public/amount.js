@@ -14,7 +14,6 @@ mel.amount = function(opts) {
     var amount = 0;
 
     var updateAmount = function() {
-      console.log(amount);
       gainNode.gain.value = amount;
     }
 

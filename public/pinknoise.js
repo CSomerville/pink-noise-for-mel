@@ -7,7 +7,7 @@ var mel = mel || {};
 mel.pinkNoise = function(opts) {
 
   if (!opts.audioCtx) {
-    throw new Error('mel.microphone must be initialized with audioCtx');
+    throw new Error('mel.pinkNoise must be initialized with audioCtx');
   } else {
 
     var audioCtx = opts.audioCtx;

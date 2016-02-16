@@ -7,9 +7,11 @@ mel.init = function() {
   var microphoneDOM = getDomNode('microphone');
   var oscilloscopeDOM = getDomNode('oscilloscope');
   var masterVolumeDOM = getDomNode('master-volume');
+  var pinkAmountDOM = getDomNode('pink-amount');
 
   // initialize audio nodes
 
+  var AudioContext = window.AudioContext || window.webkitAudioContext;
   var audioCtx = new AudioContext();
   var microphone, oscilloscope, pinkNoise, masterVolume;
 
@@ -25,18 +27,28 @@ mel.init = function() {
 
   pinkNoise = mel.pinkNoise({audioCtx: audioCtx});
 
+  amplitudeDetector = mel.amplitudeDetector({audioCtx: audioCtx});
+
   masterVolume = mel.amount({
     audioCtx: audioCtx,
     domNode: masterVolumeDOM
   });
 
+  pinkAmount = mel.amount({
+    audioCtx: audioCtx,
+    domNode: pinkAmountDOM
+  });
+
   microphone.initNode(function(micStream) {
     var masterVolumeNode = masterVolume.initNode();
     var oscilNode = oscilloscope.initNode();
+    var pinkNoiseNode = pinkNoise.initNode();
+    var ampAnalyzerNode = amplitudeDetector.initAnalyzerNode();
+    var ampGainNode = amplitudeDetector.initGainNode();
 
-    pinkNoise.initNode().connect(masterVolumeNode);
-    masterVolumeNode.connect(oscilNode);
-    oscilNode.connect(audioCtx.destination);
+    micStream.connect(ampAnalyzerNode);
+    pinkNoiseNode.connect(ampGainNode);
+    ampGainNode.connect(audioCtx.destination);
   });
 
   // animate
