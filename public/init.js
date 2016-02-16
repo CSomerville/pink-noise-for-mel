@@ -43,12 +43,19 @@ mel.init = function() {
     var masterVolumeNode = masterVolume.initNode();
     var oscilNode = oscilloscope.initNode();
     var pinkNoiseNode = pinkNoise.initNode();
+    var pinkAmountNode = pinkAmount.initNode();
     var ampAnalyzerNode = amplitudeDetector.initAnalyzerNode();
     var ampGainNode = amplitudeDetector.initGainNode();
 
     micStream.connect(ampAnalyzerNode);
+    micStream.connect(masterVolumeNode);
+
     pinkNoiseNode.connect(ampGainNode);
-    ampGainNode.connect(audioCtx.destination);
+    ampGainNode.connect(pinkAmountNode);
+    pinkAmountNode.connect(masterVolumeNode);
+
+    masterVolumeNode.connect(oscilNode);
+    masterVolumeNode.connect(audioCtx.destination);
   });
 
   // animate
