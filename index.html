@@ -12,7 +12,7 @@
     <script src="/static/init.js"></script>
     <style>
       #oscilloscope {
-        width: 75%;
+        width: 65%;
         display: inline-block;
       }
       .gain-control {
@@ -34,6 +34,9 @@
   <body>
     <canvas id="oscilloscope" height="300px" width="600px"></canvas>
     <div id="pink-amount" class="gain-control">
+      <div class="slider"></div>
+    </div>
+    <div id="mic-amount" class="gain-control">
       <div class="slider"></div>
     </div>
     <div id="master-volume" class="gain-control">

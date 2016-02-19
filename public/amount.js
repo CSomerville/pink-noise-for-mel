@@ -11,7 +11,7 @@ mel.amount = function(opts) {
     var audioCtx = opts.audioCtx;
     var domNode = opts.domNode;
     var gainNode = audioCtx.createGain();
-    var amount = 0;
+    var amount = 0.0001;
 
     var updateAmount = function() {
       gainNode.gain.value = amount;
@@ -31,8 +31,9 @@ mel.amount = function(opts) {
 
       draggable.on('dragMove', function(e, pointer, moveVector) {
         var y = pointer.pageY;
+        var fudge = 0.0000000001 // scriptprocessor doesn't like gain to be 0
         if (y <= bounds.bottom && y >= bounds.top) {
-          amount = 1.0 - ((y - bounds.top) / bounds.height);
+          amount = (1.0 - ((y - bounds.top) / bounds.height));
           updateAmount();
         }
       });
