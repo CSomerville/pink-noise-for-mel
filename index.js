@@ -5,10 +5,10 @@ var morgan = require('morgan');
 var app = express();
 
 app.use(morgan('dev'));
-app.use('/static', express.static('public'));
+app.use('/static', express.static('dist'));
 
 app.get('/', function(req, res) {
-  fs.createReadStream('index.html', 'utf-8')
+  fs.createReadStream('dist/index.html', 'utf-8')
     .pipe(res);
 });
 
