@@ -15,7 +15,6 @@ mel.microphone = function(opts) {
     // to access client's microphone - browser implementations still vary
     navigator.getUserMedia = (navigator.getUserMedia ||
       navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia ||
       navigator.msGetUserMedia);
 
     var initNode = function(cb) {
@@ -26,6 +25,21 @@ mel.microphone = function(opts) {
         }, function (err) {
           view(err.message);
         });
+
+
+      // firefox implementation
+      } else if (navigator.mediaDevices.getUserMedia) {
+
+        navigator.mediaDevices.getUserMedia({audio: true, video: false})
+          .then(function(stream) {
+            window.doNotGC = audioCtx.createMediaStreamSource(stream); // works around firefox bug (stream gets garbage collected)
+            source = window.doNotGC;
+            cb(source);
+          })
+          .catch(function(err) {
+            view(err.message);
+          });
+
       } else {
         view('this browser does not support microphone access.');
       }
