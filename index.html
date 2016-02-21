@@ -15,12 +15,15 @@
         width: 65%;
         display: inline-block;
       }
-      .gain-control {
+      .gain-control-wrap {
         width: 10%;
+        display: inline-block;
+      }
+      .gain-control {
+        width: 100%;
         height: 400px;
         position: relative;
         background-color: pink;
-        display: inline-block;
       }
       .slider {
         width: 100%;
@@ -33,14 +36,23 @@
   </head>
   <body>
     <canvas id="oscilloscope" height="300px" width="600px"></canvas>
-    <div id="pink-amount" class="gain-control">
-      <div class="slider"></div>
+    <div class="gain-control-wrap">
+      <div id="pink-amount" class="gain-control">
+        <div class="slider"></div>
+      </div>
+      <p>pink</p>
     </div>
-    <div id="mic-amount" class="gain-control">
-      <div class="slider"></div>
+    <div class="gain-control-wrap">
+      <div id="mic-amount" class="gain-control">
+        <div class="slider"></div>
+      </div>
+      <p>mic</p>
     </div>
-    <div id="master-volume" class="gain-control">
-      <div class="slider"></div>
+    <div class="gain-control-wrap">
+      <div id="master-volume" class="gain-control">
+        <div class="slider"></div>
+      </div>
+      <p>master</p>
     </div>
     <p id="microphone"></p>
   </body>
