@@ -9,12 +9,13 @@ mel.init = function() {
   var masterVolumeDOM = getDomNode('master-volume');
   var micAmountDOM = getDomNode('mic-amount');
   var pinkAmountDOM = getDomNode('pink-amount');
+  var navDom = getDomNode('nav');
 
   // initialize audio nodes
 
   var AudioContext = window.AudioContext || window.webkitAudioContext;
   var audioCtx = new AudioContext();
-  var microphone, oscilloscope, pinkNoise, masterVolume;
+  var microphone, oscilloscope, pinkNoise, masterVolume, nav;
 
   microphone = mel.microphone({
     audioCtx: audioCtx,
@@ -43,6 +44,10 @@ mel.init = function() {
   pinkAmount = mel.amount({
     audioCtx: audioCtx,
     domNode: pinkAmountDOM
+  });
+
+  nav = mel.nav({
+    domNode: navDom
   });
 
   // async call to get usermedia (microphone) stream

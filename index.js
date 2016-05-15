@@ -8,7 +8,7 @@ app.use(morgan('dev'));
 app.use('/static', express.static('dist'));
 
 app.get('/', function(req, res) {
-  fs.createReadStream('dist/index.html', 'utf-8')
+  fs.createReadStream('dist/pink.html', 'utf-8')
     .pipe(res);
 });
 
