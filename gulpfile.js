@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
+var autoprefixer = require('gulp-autoprefixer');
 var del = require('del');
 
 gulp.task('scripts', function() {
@@ -15,6 +16,7 @@ gulp.task('views', function() {
 
 gulp.task('styles', function() {
   return gulp.src(['assets/styles/**/*.css'])
+    .pipe(autoprefixer())
     .pipe(gulp.dest('dist'));
 });
 
@@ -23,8 +25,11 @@ gulp.task('clean', function() {
 });
 
 gulp.task('build', ['clean', 'scripts', 'views', 'styles']);
-gulp.task('default', function() {
+
+gulp.task('watch', function() {
   gulp.watch('assets/scripts/**/*.js', ['scripts']);
   gulp.watch('assets/views/**/*.html', ['views']);
   gulp.watch('assets/styles/**/*.css', ['styles']);
-});
+})
+
+gulp.task('default', ['build', 'watch']);

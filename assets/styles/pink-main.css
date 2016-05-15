@@ -474,7 +474,11 @@ nav li {
   position: absolute;
   top: 380px;
   background-color: black;
-  cursor: pointer;
+  cursor: grab;
+}
+
+.slider:active {
+  cursor: grabbing;
 }
 
 #about {
